@@ -1,38 +1,34 @@
 const { gql } = require("apollo-server-express");
 module.exports = gql`
   type User {
-    email: String!
-    name: String!
-    role: String!
-    id: ID!
-    password: String!
-    meta: customArray
+    email: String
+    name: String
+    role: String
+    id: ID
+    password: String
+    meta: userMeta
   }
 
-  input Meta {
-    key: String
-    value: String
+  type userMeta {
+    meta(key: String, value: String): metaKeyValueArray
   }
+
   extend type Query {
     users: [User]
     user(id: ID!): User
-    userbyfilter(key: String): [User]
+    usersbyMeta(key: String, value: String): [User]
   }
+
   extend type Mutation {
-    addUser(
-      name: String!
-      email: String!
-      role: String!
-      password: String!
-    ): User!
+    addUser(name: String, email: String, role: String, password: String): User
     updateUser(
       id: ID!
-      name: String!
-      email: String!
-      role: String!
-      password: String!
+      name: String
+      email: String
+      role: String
+      password: String
       meta: [Meta]
-    ): User!
+    ): User
     deleteUser(id: ID!): Boolean!
   }
 `;

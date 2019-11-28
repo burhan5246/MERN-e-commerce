@@ -14,10 +14,27 @@ const PageSchema = new Schema({
     type: String,
     required: true
   },
-  meta: {},
+  slug: {
+    type: String
+  },
+  meta: [
+    {
+      key: {
+        type: String,
+        required: true
+      },
+      value: {
+        type: String,
+        required: true
+      }
+    }
+  ],
   date: {
     type: Date,
     default: Date.now
+  },
+  updated: {
+    type: Date
   }
 });
 

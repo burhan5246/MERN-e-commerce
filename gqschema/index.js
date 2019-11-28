@@ -1,10 +1,16 @@
 const { gql } = require("apollo-server-express");
 const userSchema = require("./user");
+const pageSchema = require("./page");
 
 const linkSchema = gql`
   scalar Date
-  scalar customArray
+  scalar metaKeyValueArray
   scalar customObject
+
+  input Meta {
+    key: String
+    value: String
+  }
 
   type Query {
     _: Boolean
@@ -19,4 +25,4 @@ const linkSchema = gql`
   }
 `;
 
-module.exports = [linkSchema, userSchema];
+module.exports = [linkSchema, userSchema, pageSchema];

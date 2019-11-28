@@ -1,13 +1,14 @@
 const { GraphQLDateTime } = require("graphql-iso-date");
 
 const userResolvers = require("./user");
+const pageResolvers = require("./page");
 
 const customScalarResolver = {
   Date: GraphQLDateTime
 };
 
-const customArray = {
-  customArray: []
+const metaKeyValueArray = {
+  metaKeyValueArray: []
 };
 
 const customObject = {
@@ -15,7 +16,8 @@ const customObject = {
 };
 module.exports = [
   customScalarResolver,
-  customArray,
+  metaKeyValueArray,
   customObject,
-  userResolvers
+  userResolvers,
+  pageResolvers
 ];
