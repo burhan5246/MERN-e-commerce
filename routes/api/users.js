@@ -50,7 +50,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
-
+  const errors = {};
   // Find user by email
   User.findOne({ email }).then(user => {
     // Check for user
@@ -71,7 +71,8 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: token
+              token: token,
+              role: user.role
             });
           }
         );

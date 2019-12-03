@@ -2,7 +2,6 @@ const User = require("../models/User");
 const { isEmpty, putError, checkError } = require("../config/helpers");
 const validate = require("../validations/user");
 const bcrypt = require("bcryptjs");
-
 module.exports = {
   Query: {
     users: async (root, args) => {
@@ -98,7 +97,7 @@ module.exports = {
           user.email = args.email || user.email;
           user.role = args.role || user.role;
           user.updated = Date.now();
-          let metArra = [];
+          let metArra = {};
 
           for (let i in args.meta) {
             metArra[args.meta[i].key] = args.meta[i];
@@ -107,18 +106,17 @@ module.exports = {
           for (let i in user.meta) {
             if (metArra[user.meta[i].key]) {
               user.meta[i].value = metArra[user.meta[i].key].value;
-              metArra.splice(user.meta[i].key, 1);
+              delete metArra[user.meta[i].key];
             }
           }
 
-          if (metArra.length) {
+          if (Object.keys(metArra).length) {
             for (let i in metArra) {
               user.meta.unshift(metArra[i]);
             }
           }
 
-          await user.save();
-          return user;
+          return await user.save();
         } else {
           throw putError("User not exist");
         }

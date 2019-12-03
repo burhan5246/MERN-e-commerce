@@ -7,6 +7,8 @@ module.exports = gql`
     id: ID
     password: String
     meta: userMeta
+    date: Date
+    updated: Date
   }
 
   type userMeta {

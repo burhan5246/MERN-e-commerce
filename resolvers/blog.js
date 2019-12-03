@@ -1,45 +1,45 @@
-const Page = require("../models/Page");
+const Blog = require("../models/Blog");
 const { isEmpty, putError, checkError } = require("../config/helpers");
-const validate = require("../validations/page");
+const validate = require("../validations/blog");
 
 module.exports = {
   Query: {
-    pages: async (root, args) => {
+    blogs: async (root, args) => {
       try {
-        return await Page.find({});
+        return await Blog.find({});
       } catch (error) {
         throw new Error("Something went wrong.");
       }
     },
-    page: async (root, args) => {
+    blog: async (root, args) => {
       try {
-        const page = await Page.findById(args.id);
-        if (!page) {
-          throw putError("Page not found");
+        const blog = await Blog.findById(args.id);
+        if (!blog) {
+          throw putError("Blog not found");
         }
-        return page;
+        return blog;
       } catch (error) {
         error = checkError(error);
         throw new Error(error.custom_message);
       }
     },
-    pagesbyMeta: async (root, args) => {
+    blogsbyMeta: async (root, args) => {
       try {
-        const page = await Page.find({
+        const blog = await Blog.find({
           "meta.key": args.key,
           "meta.value": args.value
         });
-        if (!page) {
-          throw putError("Page not found");
+        if (!blog) {
+          throw putError("Blog not found");
         }
-        return page;
+        return blog;
       } catch (error) {
         error = checkError(error);
         throw new Error(error.custom_message);
       }
     }
   },
-  pageMeta: {
+  blogMeta: {
     meta: async (root, args) => {
       try {
         if (isEmpty(args)) {
@@ -58,25 +58,25 @@ module.exports = {
     }
   },
   Mutation: {
-    addPage: async (root, args) => {
+    addBlog: async (root, args) => {
       try {
         // Check Validation
-        const errors = validate("addPage", args);
+        const errors = validate("addBlog", args);
         if (!isEmpty(errors)) {
           throw putError(errors);
         }
 
-        const page = await Page.findOne({ name: args.name });
-        if (page) {
+        const blog = await Blog.findOne({ name: args.name });
+        if (blog) {
           throw putError("Name already exist.");
         } else {
-          const newPage = new Page({
+          const newBlog = new Blog({
             name: args.name,
             description: args.description,
             status: args.status
           });
 
-          return await newPage.save();
+          return await newBlog.save();
         }
       } catch (error) {
         //console.log("here comes", error);
@@ -84,14 +84,14 @@ module.exports = {
         throw new Error(error.custom_message);
       }
     },
-    updatePage: async (root, args) => {
+    updateBlog: async (root, args) => {
       try {
-        const page = await Page.findById({ _id: args.id });
-        if (page) {
-          page.name = args.name || page.name;
-          page.description = args.description || page.description;
-          page.status = args.status || page.status;
-          page.updated = Date.now();
+        const blog = await Blog.findById({ _id: args.id });
+        if (blog) {
+          blog.name = args.name || blog.name;
+          blog.description = args.description || blog.description;
+          blog.status = args.status || blog.status;
+          blog.updated = Date.now();
 
           let metArra = {};
 
@@ -99,31 +99,31 @@ module.exports = {
             metArra[args.meta[i].key] = args.meta[i];
           }
 
-          for (let i in page.meta) {
-            if (metArra[page.meta[i].key]) {
-              page.meta[i].value = metArra[page.meta[i].key].value;
-              delete metArra[page.meta[i].key];
+          for (let i in blog.meta) {
+            if (metArra[blog.meta[i].key]) {
+              blog.meta[i].value = metArra[blog.meta[i].key].value;
+              delete metArra[blog.meta[i].key];
             }
           }
 
           if (Object.keys(metArra).length) {
             for (let i in metArra) {
-              page.meta.unshift(metArra[i]);
+              blog.meta.unshift(metArra[i]);
             }
           }
 
-          return await page.save();
+          return await blog.save();
         } else {
-          throw putError("Page not exist");
+          throw putError("Blog not exist");
         }
       } catch (error) {
         error = checkError(error);
         throw new Error(error.custom_message);
       }
     },
-    deletePage: async (root, args) => {
-      const page = await Page.findByIdAndRemove(args.id);
-      if (page) {
+    deleteBlog: async (root, args) => {
+      const blog = await Blog.findByIdAndRemove(args.id);
+      if (blog) {
         return true;
       }
       return false;
