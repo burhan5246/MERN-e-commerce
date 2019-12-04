@@ -25,5 +25,6 @@ app.use(express.json({ extended: false }));
 app.use("/api/users", require("./routes/api/users"));
 
 //running
-app.get("/", (req, res) => res.send("Mern E-commerce is running...."));
+app.get("/", (req, res) => res.send("Mern E-commerce is running....here "));
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
