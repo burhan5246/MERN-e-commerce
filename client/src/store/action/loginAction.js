@@ -23,9 +23,8 @@ export const LoginAction = (email, password) => dispatch => {
 
 export const insertToken = () => dispatch => {
   let token;
-  if (cookie.load("user")) {
-    //token = JSON.parse(localStorage.getItem("auth"));
-    token = cookie.load("user");
+  if (cookie.load("auth")) {
+    token = cookie.load("auth");
     dispatch({
       type: INSERT_TOKEN_SUCCESS,
       payload: token

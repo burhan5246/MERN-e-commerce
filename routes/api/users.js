@@ -72,7 +72,8 @@ router.post("/login", (req, res) => {
             res.json({
               success: true,
               token: token,
-              role: user.role
+              role: user.role,
+              user_id: user.id
             });
           }
         );
