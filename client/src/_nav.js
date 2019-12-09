@@ -16,6 +16,28 @@ export default {
           icon: "icon-plus"
         }
       ]
-    }
+    },
+    {
+      name: 'Blogs',
+      url: '/all-blogs',
+      icon: 'icon-pin',
+      children: [
+        {
+          name: 'All Blogs',
+          url: '/all-blogs',
+          icon: 'icon-pin',
+        },
+        {
+          name: 'Add Blog',
+          url: '/add-blog',
+          icon: 'icon-plus',
+        },
+        {
+          name: 'Categories',
+          url: '/categories',
+          icon: 'icon-pin'
+        }
+      ],
+    },
   ]
 };
