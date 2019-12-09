@@ -14,24 +14,33 @@ import { ApolloProvider } from "@apollo/react-hooks";
 import { createHttpLink } from "apollo-link-http";
 import { setContext } from "apollo-link-context";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { gql } from "apollo-boost";
+import cookie from "react-cookies";
+import { baseUrl } from "./utils/helper";
 
 const httpLink = createHttpLink({
-  uri: "/graphql"
+  uri: "http://localhost:7786/graphql"
+  //uri: `${baseUrl}/graphql`
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem("token");
+  const token = cookie.load("auth").token;
   return {
     headers: {
       ...headers,
-      authorization: token ? `Bearer ${token}` : ""
+      //authorization: token ? `Bearer ${token}` : ""
+      authorization: token || ""
     }
   };
 });
 
+// const client = new ApolloClient({
+//   link: authLink.concat(httpLink),
+//   cache: new InMemoryCache()
+// });
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache()
+  uri: "http://localhost:7786/graphql"
 });
 
 ReactDOM.render(

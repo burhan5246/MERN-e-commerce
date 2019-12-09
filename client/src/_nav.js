@@ -7,7 +7,7 @@ export default {
       children: [
         {
           name: "All Users",
-          url: "/all-user",
+          url: "/all-users",
           icon: "icon-user"
         },
         {
@@ -18,26 +18,26 @@ export default {
       ]
     },
     {
-      name: 'Blogs',
-      url: '/all-blogs',
-      icon: 'icon-pin',
+      name: "Blogs",
+      url: "/all-blogs",
+      icon: "icon-pin",
       children: [
         {
-          name: 'All Blogs',
-          url: '/all-blogs',
-          icon: 'icon-pin',
+          name: "All Blogs",
+          url: "/all-blogs",
+          icon: "icon-pin"
         },
         {
-          name: 'Add Blog',
-          url: '/add-blog',
-          icon: 'icon-plus',
+          name: "Add Blog",
+          url: "/add-blog",
+          icon: "icon-plus"
         },
         {
-          name: 'Categories',
-          url: '/categories',
-          icon: 'icon-pin'
+          name: "Categories",
+          url: "/categories",
+          icon: "icon-pin"
         }
-      ],
-    },
+      ]
+    }
   ]
 };

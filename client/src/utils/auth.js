@@ -1,7 +1,7 @@
 import cookie from "react-cookies";
 
 //var user_token = JSON.parse(localStorage.getItem("auth")) || {};
-var user_token = cookie.load("user");
+var user_token = cookie.load("auth");
 const getToken = () => {
   return user_token.token;
 };
@@ -14,7 +14,7 @@ const setUserToken = new_token => {
 };
 
 const logout = () => {
-  localStorage.removeItem("auth");
+  //localStorage.removeItem("auth");
 };
 
 export default {
